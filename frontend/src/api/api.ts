@@ -1,6 +1,6 @@
 // Real API integration for DSATM Exam System backend
 
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = '/api';
 
 export async function fetchStudents() {
   const res = await fetch(`${API_BASE}/students`);
