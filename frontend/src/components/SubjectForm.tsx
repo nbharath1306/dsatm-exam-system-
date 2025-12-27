@@ -13,15 +13,24 @@ const SubjectForm: React.FC<SubjectFormProps> = ({ initial = {}, onSubmit, onCan
   const [department, setDepartment] = useState(initial.department || '');
   const [semester, setSemester] = useState(initial.semester || 1);
 
-  return (
-    <form
-      className="space-y-4"
-      onSubmit={e => {
-        e.preventDefault();
-        onSubmit({ name, code, department, semester });
-      }}
-    >
       <input
+        className="w-full px-3 py-2 rounded bg-indigo-100 text-indigo-900"
+        placeholder="Semester"
+        type="number"
+        min={1}
+        max={8}
+        value={semester}
+        onChange={e => setSemester(Number(e.target.value))}
+      />
+      <select
+        className="w-full px-3 py-2 rounded bg-indigo-100 text-indigo-900"
+        value={category}
+        onChange={e => setCategory(e.target.value)}
+        required
+      >
+        <option value="PCC">PCC (Theory Only)</option>
+        <option value="IPCC">IPCC (Theory + Practical)</option>
+      </select>
         className="w-full px-3 py-2 rounded bg-indigo-100 text-indigo-900"
         placeholder="Name"
         value={name}
@@ -37,6 +46,7 @@ const SubjectForm: React.FC<SubjectFormProps> = ({ initial = {}, onSubmit, onCan
       />
       <input
         className="w-full px-3 py-2 rounded bg-indigo-100 text-indigo-900"
+          onSubmit({ name, code, department, semester, category });
         placeholder="Department"
         value={department}
         onChange={e => setDepartment(e.target.value)}

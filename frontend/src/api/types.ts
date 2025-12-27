@@ -13,11 +13,13 @@ export interface Subject {
   name: string;
   department?: string;
   semester?: number;
+  category?: string; // PCC, IPCC, etc.
 }
 
 export interface Mark {
   id: number;
   student: Student;
   subject: Subject;
-  marks: number;
+  theoryMarks?: number;
+  practicalMarks?: number;
 }

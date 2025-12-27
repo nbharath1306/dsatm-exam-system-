@@ -135,6 +135,7 @@ const Subjects: React.FC = () => {
               <th className="pb-2">Name</th>
               <th className="pb-2">Department</th>
               <th className="pb-2">Semester</th>
+              <th className="pb-2">Category</th>
               <th className="pb-2">Actions</th>
             </tr>
           </thead>
@@ -145,6 +146,7 @@ const Subjects: React.FC = () => {
                 <td>{s.name}</td>
                 <td>{s.department}</td>
                 <td>{s.semester}</td>
+                <td>{s.category}</td>
                 <td>
                   <button
                     className="px-2 py-1 mr-2 rounded bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-semibold"

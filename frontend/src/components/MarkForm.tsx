@@ -12,7 +12,10 @@ interface MarkFormProps {
 const MarkForm: React.FC<MarkFormProps> = ({ initial = {}, students, subjects, onSubmit, onCancel }) => {
   const [studentId, setStudentId] = useState(initial.student?.id || '');
   const [subjectId, setSubjectId] = useState(initial.subject?.id || '');
-  const [marks, setMarks] = useState(initial.marks || 0);
+  // Find the selected subject to determine category
+  const selectedSubject = subjects.find(s => s.id === Number(subjectId));
+  const [theoryMarks, setTheoryMarks] = useState(initial.theoryMarks || 0);
+  const [practicalMarks, setPracticalMarks] = useState(initial.practicalMarks || 0);
 
   return (
     <form
@@ -21,7 +24,13 @@ const MarkForm: React.FC<MarkFormProps> = ({ initial = {}, students, subjects, o
         e.preventDefault();
         const student = students.find(s => s.id === Number(studentId));
         const subject = subjects.find(s => s.id === Number(subjectId));
-        onSubmit({ student, subject, marks });
+        // For PCC: only theoryMarks is used
+        // For IPCC: both theoryMarks and practicalMarks are used
+        if (selectedSubject?.category === 'IPCC') {
+          onSubmit({ student, subject, theoryMarks, practicalMarks });
+        } else {
+          onSubmit({ student, subject, theoryMarks });
+        }
       }}
     >
       <select
@@ -46,16 +55,42 @@ const MarkForm: React.FC<MarkFormProps> = ({ initial = {}, students, subjects, o
           <option key={s.id} value={s.id}>{s.name} ({s.code})</option>
         ))}
       </select>
-      <input
-        className="w-full px-3 py-2 rounded bg-indigo-100 text-indigo-900"
-        placeholder="Marks"
-        type="number"
-        min={0}
-        max={100}
-        value={marks}
-        onChange={e => setMarks(Number(e.target.value))}
-        required
-      />
+      {/* Show fields based on subject category */}
+      {selectedSubject?.category === 'IPCC' ? (
+        <>
+          <input
+            className="w-full px-3 py-2 rounded bg-indigo-100 text-indigo-900"
+            placeholder="Theory Marks"
+            type="number"
+            min={0}
+            max={100}
+            value={theoryMarks}
+            onChange={e => setTheoryMarks(Number(e.target.value))}
+            required
+          />
+          <input
+            className="w-full px-3 py-2 rounded bg-indigo-100 text-indigo-900"
+            placeholder="Practical Marks"
+            type="number"
+            min={0}
+            max={100}
+            value={practicalMarks}
+            onChange={e => setPracticalMarks(Number(e.target.value))}
+            required
+          />
+        </>
+      ) : (
+        <input
+          className="w-full px-3 py-2 rounded bg-indigo-100 text-indigo-900"
+          placeholder="Theory Marks"
+          type="number"
+          min={0}
+          max={100}
+          value={theoryMarks}
+          onChange={e => setTheoryMarks(Number(e.target.value))}
+          required
+        />
+      )}
       <div className="flex gap-2 justify-end">
         <button
           type="button"
