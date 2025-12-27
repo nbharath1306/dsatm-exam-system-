@@ -21,5 +21,8 @@ public class Mark {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    private Integer marks;
+    // For PCC: only theoryMarks is used
+    // For IPCC: both theoryMarks and practicalMarks are used
+    private Integer theoryMarks;
+    private Integer practicalMarks;
 }

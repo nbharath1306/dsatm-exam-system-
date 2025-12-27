@@ -15,4 +15,6 @@ public class Subject {
 
     private String name;
     private String code;
+    // Category: e.g., PCC (theory), IPCC (theory+practical), etc.
+    private String category;
 }

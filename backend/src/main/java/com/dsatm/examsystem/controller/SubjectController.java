@@ -26,13 +26,17 @@ public class SubjectController {
     }
 
     @PostMapping
+
     public Subject createSubject(@RequestBody Subject subject) {
+        // Ensure category is set (default to PCC if missing)
+        if (subject.getCategory() == null) subject.setCategory("PCC");
         return subjectService.saveSubject(subject);
     }
 
     @PutMapping("/{id}")
     public Subject updateSubject(@PathVariable Long id, @RequestBody Subject subject) {
         subject.setId(id);
+        if (subject.getCategory() == null) subject.setCategory("PCC");
         return subjectService.saveSubject(subject);
     }
 
